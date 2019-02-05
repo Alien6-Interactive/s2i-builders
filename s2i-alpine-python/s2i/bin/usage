@@ -6,7 +6,7 @@ To use it, install S2I: https://github.com/openshift/source-to-image
 
 Sample invocation:
 
-s2i build http://gitlab.alien6.com/devops/s2i-builders.git --context-dir=s2i-alpine-python/e2e/ alien6 python-sample-app
+s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-alpine-python/e2e/ alien6/s2i-alpine-python:0.1 python-sample-app
 
 You can then run the resulting image via:
 docker run -p 8080:8080 python-sample-app
