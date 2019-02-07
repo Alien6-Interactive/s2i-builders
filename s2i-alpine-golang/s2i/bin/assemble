@@ -1,0 +1,29 @@
+#!/bin/bash -e
+
+if [[ "$1" == "-h" ]]; then
+	# If the 'base-alpine 3.8' assemble script is executed with '-h' flag,
+	# print the usage.
+	exec /usr/libexec/s2i/usage
+fi
+
+# Restore artifacts from the previous build (if they exist).
+#
+if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+  echo "---> Restoring build artifacts..."
+  mv /tmp/artifacts/. ./
+fi
+
+echo "---> Installing application source..."
+mkdir -p $SOURCE
+cp -Rf /tmp/src/. $SOURCE
+cd $SOURCE
+
+echo "---> Downloading dependencies..."
+go get -v ./...
+
+echo "---> Building application from source..."
+go build -v -o main
+go install main
+
+# set permissions for any installed artifacts
+fix-permissions /opt/app-root
