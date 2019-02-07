@@ -1,0 +1,12 @@
+#!/bin/bash -e
+cat <<EOF
+This is the base-ubuntu 18.04 S2I image:
+To use it, install S2I: https://github.com/openshift/source-to-image
+
+Sample invocation:
+
+s2i build s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-base-ubuntu/e2e/ alien6/s2i-base-ubuntu:0.1 sample-app
+
+You can then run the resulting image via:
+docker run <application image>
+EOF
