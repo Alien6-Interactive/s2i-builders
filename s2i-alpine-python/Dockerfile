@@ -96,7 +96,7 @@ RUN set -ex ;\
     # remove build dependencies and any leftover apk cache
     apk del --no-cache --purge .build-deps ;\
     rm -rf /var/cache/apk/* ;\
-    adduser -s /bin/sh -u 1001 -G root -h ${HOME} -S -D default ;\
+    adduser -s /bin/sh -u 1001 -G root -h ${APP_ROOT} -S -D default ;\
     chown -R 1001:0 ${APP_ROOT} && chmod -R og+rwx ${APP_ROOT} ;\
     chown -R 1001:0 ${USR_LIB} ;
 
