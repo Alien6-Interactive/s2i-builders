@@ -22,7 +22,7 @@ ENV STI_SCRIPTS_PATH=/usr/libexec/s2i \
     GOROOT=/usr/lib/go \
     GOPATH=/go \ 
     GOBIN=/go/bin \
-    SOURCE=$HOME/go/src/main \
+    SOURCE=$HOME/go/src \
     PATH=/go/bin:/usr/local/go/bin:$PATH
 
 LABEL summary="$SUMMARY" \
@@ -48,19 +48,17 @@ RUN export \
 RUN export PATH="$PATH"; \
 	go version
 
-
 RUN mkdir -p "$SOURCE" "$GOBIN" && \
     chmod -R 777 "$GOPATH" && \
     chmod -R 777 "$SOURCE" 
 
-
 # Add configuration files, bashrc and other tweaks
 COPY ./s2i/bin/fix-permissions /usr/bin
-COPY ./s2i/bin/ ${STI_SCRIPTS_PATH}
+COPY ./s2i/bin/ "$STI_SCRIPTS_PATH"
 
 USER 1001
 
 WORKDIR $SOURCE
 
 # Set the default CMD to print the usage of the language image
-CMD ${STI_SCRIPTS_PATH}/usage
+CMD ["${STI_SCRIPTS_PATH}/usage"]
