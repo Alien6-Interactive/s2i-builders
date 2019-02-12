@@ -1,28 +1,36 @@
-FROM docker:git
+FROM alien6/s2i-base-alpine:0.1
 
 EXPOSE 8080
 
-RUN apk add --no-cache git make musl-dev go bash
+USER root
+
+# When repository cannot be reached
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories; \
+    echo "http://dl-3.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories; \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories; \
+    echo "http://dl-5.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+
+RUN apk add --no-cache bash gcc musl-dev openssl go ;
 
 ENV SUMMARY="Platform for building and running golang applications" \
     DESCRIPTION="Golang available as container is a base platform for \
     building and running various Golang applications and frameworks."
 
 # Configure Go
-ENV APP_ROOT=/opt/app-root \
-    STI_SCRIPTS_PATH=/usr/libexec/s2i \
+ENV STI_SCRIPTS_PATH=/usr/libexec/s2i \
     USR_LIB=/usr/lib \
-	GOPATH=/go \
+    GOROOT=/usr/lib/go \
+    GOPATH=/go \ 
     GOBIN=/go/bin \
     SOURCE=$HOME/go/src/main \
-    PATH=$PATH:$HOME/go/bin:/usr/local/go/bin
+    PATH=/go/bin:/usr/local/go/bin:$PATH
 
 LABEL summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
       io.k8s.description="Alpine Golang S2I Builder" \
       io.k8s.display-name="S2I Alpine Golang" \
-      io.openshift.tags="builder,alpine,git,docker, golang" \
+      io.openshift.tags="builder,alpine,git,golang" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image://${STI_SCRIPTS_PATH} \
       version="1" \
@@ -37,18 +45,14 @@ RUN export \
 		GOHOSTARCH="$(go env GOHOSTARCH)" \
 	; 
 
-RUN export PATH="/usr/local/go/bin:$PATH"; \
+RUN export PATH="$PATH"; \
 	go version
 
-RUN set -ex ;\
-    mkdir -p ${APP_ROOT} ;\
-    mkdir -p ${STI_SCRIPTS_PATH} ;
 
-RUN adduser -s /bin/sh -u 1001 -G root -h ${APP_ROOT} -S -D default ;\
-    chown -R 1001:0 ${APP_ROOT} && chmod -R og+rwx ${APP_ROOT} ;
+RUN mkdir -p "$SOURCE" "$GOBIN" && \
+    chmod -R 777 "$GOPATH" && \
+    chmod -R 777 "$SOURCE" 
 
-RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 # Add configuration files, bashrc and other tweaks
 COPY ./s2i/bin/fix-permissions /usr/bin
@@ -56,7 +60,7 @@ COPY ./s2i/bin/ ${STI_SCRIPTS_PATH}
 
 USER 1001
 
-WORKDIR $GOPATH
+WORKDIR $SOURCE
 
 # Set the default CMD to print the usage of the language image
 CMD ${STI_SCRIPTS_PATH}/usage
