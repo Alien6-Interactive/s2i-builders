@@ -50,7 +50,8 @@ RUN export PATH="$PATH"; \
 
 RUN mkdir -p "$SOURCE" "$GOBIN" && \
     chmod -R 777 "$GOPATH" && \
-    chmod -R 777 "$SOURCE" 
+    chmod -R 777 "$SOURCE" && \
+    chmod -R 777 "$USR_LIB"
 
 # Add configuration files, bashrc and other tweaks
 COPY ./s2i/bin/fix-permissions /usr/bin
