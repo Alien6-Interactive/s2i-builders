@@ -49,7 +49,8 @@ RUN set -ex ;\
     rm -rf /var/cache/apk/* ;
 
 RUN adduser -s /bin/sh -u 1001 -G root -h ${APP_ROOT} -S -D default ;\
-    chown -R 1001:0 ${APP_ROOT} && chmod -R og+rwx ${APP_ROOT} ;
+    chown -R 1001:0 ${APP_ROOT} && chmod -R og+rwx ${APP_ROOT} ;\
+    chown -R 1001:0 ${USR_LIB} ;
 
 RUN ln -sf /bin/bash /bin/sh
 
