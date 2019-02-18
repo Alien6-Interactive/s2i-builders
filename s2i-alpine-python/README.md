@@ -21,4 +21,4 @@ to have `/bin/sh` and `tar` commands available.
 
 ### Usage
 
-```s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-alpine-golang/e2e/ alien6/s2i-alpine-golang:latest golang-sample-app```
+```s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-alpine-python/e2e/ alien6/s2i-alpine-python:latest python-sample-app```
