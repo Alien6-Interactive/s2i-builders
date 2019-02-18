@@ -1,4 +1,4 @@
-FROM alien6/s2i-base-alpine:0.1
+FROM alien6/s2i-base-alpine:latest
 
 EXPOSE 8080
 

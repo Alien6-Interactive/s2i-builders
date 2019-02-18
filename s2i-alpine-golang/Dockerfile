@@ -1,4 +1,4 @@
-FROM alien6/s2i-base-alpine:0.1
+FROM alien6/s2i-base-alpine:latest
 
 EXPOSE 8080
 
@@ -34,7 +34,7 @@ LABEL summary="$SUMMARY" \
       io.openshift.expose-services="8080:http" \
       io.openshift.s2i.scripts-url=image://${STI_SCRIPTS_PATH} \
       version="1" \
-      usage="s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-alpine-golang/e2e/ alien6/s2i-alpine-golang:0.1 golang-sample-app" \
+      usage="s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-alpine-golang/e2e/ alien6/s2i-alpine-golang:latest golang-sample-app" \
       maintainer="Alien6 <contact@alien6.com>"
 
 RUN export \

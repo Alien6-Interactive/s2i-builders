@@ -18,7 +18,7 @@ LABEL summary="$SUMMARY" \
       io.openshift.tags="builder,ubuntu" \
       io.openshift.s2i.scripts-url=image://${STI_SCRIPTS_PATH} \
       version="1" \
-      usage="s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-base-ubuntu/e2e/ alien6/s2i-base-ubuntu:0.1 sample-app" \
+      usage="s2i build https://github.com/Alien6-Interactive/s2i-builders.git --context-dir=s2i-base-ubuntu/e2e/ alien6/s2i-base-ubuntu:latest sample-app" \
       maintainer="Alien6 <contact@alien6.com>"
 
 ENV PACKAGES="\
