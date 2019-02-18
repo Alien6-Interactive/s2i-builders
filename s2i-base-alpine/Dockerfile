@@ -50,7 +50,8 @@ RUN set -ex ;\
 
 RUN adduser -s /bin/sh -u 1001 -G root -h ${APP_ROOT} -S -D default ;\
     chown -R 1001:0 ${APP_ROOT} && chmod -R og+rwx ${APP_ROOT} ;\
-    chown -R 1001:0 ${USR_LIB} ;
+    chown -R 1001:0 ${USR_LIB} ;\
+    chown -R 1001:0 ${STI_SCRIPTS_PATH} ;
 
 RUN ln -sf /bin/bash /bin/sh
 
