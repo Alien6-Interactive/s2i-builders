@@ -33,6 +33,7 @@ ENV PACKAGES="\
     ca-certificates \
     libssl1.0 \
     libffi-dev \
+    nss-tools \
 "
 
 RUN set -ex ;\
