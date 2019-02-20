@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+# S2I run script for the 'nodejs' image.
+# The run script executes the server that runs your application.
+#
+# For more information see the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+# Runs the nodejs application server. If the container is run in development mode,
+# hot deploy and debugging are enabled.
+echo "Launching via npm..."
+exec npm $NPM_RUN
