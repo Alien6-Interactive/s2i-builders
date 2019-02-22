@@ -29,6 +29,8 @@ ENV PACKAGES="\
     tar \
     unzip \
     wget \
+    python-pip \
+    python3-pip \
 "
 
 RUN export DEBIAN_FRONTEND=noninteractive ;\
